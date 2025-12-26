@@ -9,6 +9,8 @@ services:
     restart: always
     depends_on:
       - api
+    env_file:
+      - .env.example
 
   admin:
     container_name: admin
@@ -21,6 +23,8 @@ services:
     depends_on:
       - api
       - web
+    env_file:
+      - .env.example
 
   space:
     container_name: space
@@ -33,6 +37,8 @@ services:
     depends_on:
       - api
       - web
+    env_file:
+      - .env.example
 
   api:
     container_name: api
@@ -104,6 +110,8 @@ services:
       args:
         DOCKER_BUILDKIT: 1
     restart: always
+    env_file:
+      - .env.example
 
   plane-db:
     container_name: plane-db

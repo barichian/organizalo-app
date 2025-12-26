@@ -1,6 +1,6 @@
 services:
   web:
-    container_name: web
+
     build:
       context: .
       dockerfile: ./apps/web/Dockerfile.web
@@ -26,7 +26,7 @@ services:
       - .env.example
 
   space:
-    container_name: space
+
     build:
       context: .
       dockerfile: ./apps/space/Dockerfile.space
@@ -40,7 +40,7 @@ services:
       - .env.example
 
   api:
-    container_name: api
+
     build:
       context: ./apps/api
       dockerfile: Dockerfile.api
@@ -57,7 +57,7 @@ services:
       RABBITMQ_VHOST: ${RABBITMQ_VHOST:-plane}
 
   worker:
-    container_name: bgworker
+
     build:
       context: ./apps/api
       dockerfile: Dockerfile.api
@@ -75,7 +75,7 @@ services:
       RABBITMQ_VHOST: ${RABBITMQ_VHOST:-plane}
 
   beat-worker:
-    container_name: beatworker
+
     build:
       context: ./apps/api
       dockerfile: Dockerfile.api
@@ -93,7 +93,7 @@ services:
       RABBITMQ_VHOST: ${RABBITMQ_VHOST:-plane}
 
   migrator:
-    container_name: plane-migrator
+
     build:
       context: ./apps/api
       dockerfile: Dockerfile.api
@@ -110,7 +110,7 @@ services:
       RABBITMQ_VHOST: ${RABBITMQ_VHOST:-plane}
 
   live:
-    container_name: plane-live
+
     build:
       context: .
       dockerfile: ./apps/live/Dockerfile.live
@@ -121,7 +121,7 @@ services:
       - .env.example
 
   plane-db:
-    container_name: plane-db
+
     image: postgres:15.7-alpine
     restart: always
     command: postgres -c 'max_connections=1000'
@@ -136,14 +136,14 @@ services:
       PGDATA: /var/lib/postgresql/data
 
   plane-redis:
-    container_name: plane-redis
+
     image: valkey/valkey:7.2.11-alpine
     restart: always
     volumes:
       - redisdata:/data
 
   plane-mq:
-    container_name: plane-mq
+
     image: rabbitmq:3.13.6-management-alpine
     restart: always
     env_file:
@@ -156,7 +156,7 @@ services:
       - rabbitmq_data:/var/lib/rabbitmq
 
   plane-minio:
-    container_name: plane-minio
+
     image: minio/minio
     restart: always
     command: server /export --console-address ":9090"
@@ -168,7 +168,7 @@ services:
 
   # Comment this if you already have a reverse proxy running
   proxy:
-    container_name: proxy
+
     build:
       context: ./apps/proxy
       dockerfile: Dockerfile.ce

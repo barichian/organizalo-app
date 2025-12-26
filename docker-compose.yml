@@ -142,6 +142,18 @@ services:
     volumes:
       - redisdata:/data
 
+  whatsapp:
+    image: devlikeapro/waha:latest
+    restart: always
+    environment:
+      WHATSAPP_DEFAULT_ENGINE: WEBJS
+      WHATSAPP_SWAGGER_USERNAME: admin
+      WHATSAPP_SWAGGER_PASSWORD: admin
+      WHATSAPP_API_KEY: plane
+    volumes:
+      - whatsapp_data:/app/sessions
+
+
   plane-mq:
 
     image: rabbitmq:3.13.6-management-alpine
@@ -184,6 +196,7 @@ services:
       - api
       - space
       - admin
+      - whatsapp
     env_file:
       - .env.example
 
@@ -192,3 +205,4 @@ volumes:
   redisdata:
   uploads:
   rabbitmq_data:
+  whatsapp_data:

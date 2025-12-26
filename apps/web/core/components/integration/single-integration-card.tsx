@@ -23,6 +23,7 @@ import useIntegrationPopup from "@/hooks/use-integration-popup";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 // services
 import { IntegrationService } from "@/services/integrations";
+import { WhatsAppConnectModal } from "./whatsapp-connect-modal";
 
 type Props = {
   integration: IAppIntegration;
@@ -52,6 +53,7 @@ const integrationService = new IntegrationService();
 export const SingleIntegrationCard = observer(function SingleIntegrationCard({ integration }: Props) {
   // states
   const [deletingIntegration, setDeletingIntegration] = useState(false);
+  const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState(false);
   // router
   const { workspaceSlug } = useParams();
   // store hooks
@@ -106,77 +108,91 @@ export const SingleIntegrationCard = observer(function SingleIntegrationCard({ i
 
   const isInstalled = workspaceIntegrations?.find((i: any) => i.integration_detail.id === integration.id);
 
-  return (
-    <div className="flex items-center justify-between gap-2 border-b border-custom-border-100 bg-custom-background-100 px-4 py-6">
-      <div className="flex items-start gap-4">
-        <div className="h-10 w-10 flex-shrink-0">
-          <img
-            src={integrationDetails[integration.provider].logo}
-            className="w-full h-full object-cover"
-            alt={`${integration.title} Logo`}
-          />
-        </div>
-        <div>
-          <h3 className="flex items-center gap-2 text-sm font-medium">
-            {integration.title}
-            {workspaceIntegrations
-              ? isInstalled && <CheckCircle className="h-3.5 w-3.5 fill-transparent text-green-500" />
-              : null}
-          </h3>
-          <p className="text-sm tracking-tight text-custom-text-200">
-            {workspaceIntegrations
-              ? isInstalled
-                ? integrationDetails[integration.provider].installed
-                : integrationDetails[integration.provider].notInstalled
-              : "Loading..."}
-          </p>
-        </div>
-      </div>
+  const isInstalled = workspaceIntegrations?.find((i: any) => i.integration_detail.id === integration.id);
 
-      {workspaceIntegrations ? (
-        isInstalled ? (
-          <Tooltip
-            isMobile={isMobile}
-            disabled={isUserAdmin}
-            tooltipContent={!isUserAdmin ? "You don't have permission to perform this" : null}
-          >
-            <Button
-              className={`${!isUserAdmin ? "hover:cursor-not-allowed" : ""}`}
-              variant="danger"
-              onClick={() => {
-                if (!isUserAdmin) return;
-                handleRemoveIntegration();
-              }}
-              disabled={!isUserAdmin}
-              loading={deletingIntegration}
+  return (
+    <>
+      <div className="flex items-center justify-between gap-2 border-b border-custom-border-100 bg-custom-background-100 px-4 py-6">
+        <div className="flex items-start gap-4">
+          <div className="h-10 w-10 flex-shrink-0">
+            <img
+              src={integrationDetails[integration.provider].logo}
+              className="w-full h-full object-cover"
+              alt={`${integration.title} Logo`}
+            />
+          </div>
+          <div>
+            <h3 className="flex items-center gap-2 text-sm font-medium">
+              {integration.title}
+              {workspaceIntegrations
+                ? isInstalled && <CheckCircle className="h-3.5 w-3.5 fill-transparent text-green-500" />
+                : null}
+            </h3>
+            <p className="text-sm tracking-tight text-custom-text-200">
+              {workspaceIntegrations
+                ? isInstalled
+                  ? integrationDetails[integration.provider].installed
+                  : integrationDetails[integration.provider].notInstalled
+                : "Loading..."}
+            </p>
+          </div>
+        </div>
+
+        {workspaceIntegrations ? (
+          isInstalled ? (
+            <Tooltip
+              isMobile={isMobile}
+              disabled={isUserAdmin}
+              tooltipContent={!isUserAdmin ? "You don't have permission to perform this" : null}
             >
-              {deletingIntegration ? "Uninstalling..." : "Uninstall"}
-            </Button>
-          </Tooltip>
+              <Button
+                className={`${!isUserAdmin ? "hover:cursor-not-allowed" : ""}`}
+                variant="danger"
+                onClick={() => {
+                  if (!isUserAdmin) return;
+                  handleRemoveIntegration();
+                }}
+                disabled={!isUserAdmin}
+                loading={deletingIntegration}
+              >
+                {deletingIntegration ? "Uninstalling..." : "Uninstall"}
+              </Button>
+            </Tooltip>
+          ) : (
+            <Tooltip
+              isMobile={isMobile}
+              disabled={isUserAdmin}
+              tooltipContent={!isUserAdmin ? "You don't have permission to perform this" : null}
+            >
+              <Button
+                className={`${!isUserAdmin ? "hover:cursor-not-allowed" : ""}`}
+                variant="primary"
+                onClick={() => {
+                  if (!isUserAdmin) return;
+                  if (!isUserAdmin) return;
+                  if (integration.provider === "whatsapp") {
+                    setIsWhatsAppModalOpen(true);
+                  } else {
+                    startAuth();
+                  }
+                }}
+                loading={isInstalling}
+              >
+                {isInstalling ? "Installing..." : "Install"}
+              </Button>
+            </Tooltip>
+          )
         ) : (
-          <Tooltip
-            isMobile={isMobile}
-            disabled={isUserAdmin}
-            tooltipContent={!isUserAdmin ? "You don't have permission to perform this" : null}
-          >
-            <Button
-              className={`${!isUserAdmin ? "hover:cursor-not-allowed" : ""}`}
-              variant="primary"
-              onClick={() => {
-                if (!isUserAdmin) return;
-                startAuth();
-              }}
-              loading={isInstalling}
-            >
-              {isInstalling ? "Installing..." : "Install"}
-            </Button>
-          </Tooltip>
-        )
-      ) : (
-        <Loader>
-          <Loader.Item height="32px" width="64px" />
-        </Loader>
-      )}
-    </div>
+          <Loader>
+            <Loader.Item height="32px" width="64px" />
+          </Loader>
+        )}
+      </div>
+      <WhatsAppConnectModal
+        isOpen={isWhatsAppModalOpen}
+        onClose={() => setIsWhatsAppModalOpen(false)}
+        workspaceSlug={workspaceSlug as string}
+      />
+    </>
   );
 });

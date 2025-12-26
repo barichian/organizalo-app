@@ -177,6 +177,8 @@ services:
       - api
       - space
       - admin
+    env_file:
+      - .env.example
 
 volumes:
   pgdata:

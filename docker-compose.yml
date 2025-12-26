@@ -54,6 +54,8 @@ services:
     depends_on:
       - plane-db
       - plane-redis
+    environment:
+      RABBITMQ_VHOST: ${RABBITMQ_VHOST:-plane}
 
   worker:
     container_name: bgworker
@@ -70,6 +72,8 @@ services:
       - api
       - plane-db
       - plane-redis
+    environment:
+      RABBITMQ_VHOST: ${RABBITMQ_VHOST:-plane}
 
   beat-worker:
     container_name: beatworker
@@ -86,6 +90,8 @@ services:
       - api
       - plane-db
       - plane-redis
+    environment:
+      RABBITMQ_VHOST: ${RABBITMQ_VHOST:-plane}
 
   migrator:
     container_name: plane-migrator
@@ -144,7 +150,7 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
-      RABBITMQ_DEFAULT_VHOST: ${RABBITMQ_VHOST}
+      RABBITMQ_DEFAULT_VHOST: ${RABBITMQ_VHOST:-plane}
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
 

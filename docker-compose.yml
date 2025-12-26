@@ -13,7 +13,6 @@ services:
       - .env.example
 
   admin:
-    container_name: admin
     build:
       context: .
       dockerfile: ./apps/admin/Dockerfile.admin

@@ -274,17 +274,17 @@ services:
       context: ./apps/proxy
       dockerfile: Dockerfile.ce
     restart: always
-    ports:
-      - 8080:80
-      - 8443:443
     environment:
       - FILE_SIZE_LIMIT=${FILE_SIZE_LIMIT:-5242880}
       - BUCKET_NAME=${AWS_S3_BUCKET_NAME:-uploads}
+      - SITE_ADDRESS=:80
+      - TRUSTED_PROXIES=0.0.0.0/0
     depends_on:
       - web
       - api
       - space
       - admin
+      - live
       - whatsapp
 
 volumes:

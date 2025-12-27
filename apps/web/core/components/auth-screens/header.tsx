@@ -11,7 +11,7 @@ import { useInstance } from "@/hooks/store/use-instance";
 const authContentMap = {
   [EAuthModes.SIGN_IN]: {
     pageTitle: "Sign up",
-    text: "auth.common.new_to_plane",
+    text: "¿Nuevo en Organizalo?",
     linkText: "Sign up",
     linkHref: "/sign-up",
   },
@@ -38,7 +38,7 @@ export const AuthHeader = observer(function AuthHeader({ type }: AuthHeaderProps
       <PageHead title={t(authContentMap[type].pageTitle) + " - Plane"} />
       <div className="flex items-center justify-between gap-6 w-full flex-shrink-0 sticky top-0">
         <Link href="/">
-          <PlaneLockup height={20} width={95} className="text-custom-text-100" />
+          <img src="/organizalo-logo.png" alt="Organizalo Logo" className="h-8 w-auto" />
         </Link>
         {enableSignUpConfig && (
           <div className="flex flex-col items-end text-sm font-medium text-center sm:items-center sm:gap-2 sm:flex-row text-custom-text-300">

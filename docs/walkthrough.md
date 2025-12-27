@@ -1,28 +1,25 @@
-# Avance Visual: Organizalo.app
+# Estado del Proyecto: Organizalo.app
 
-**Fecha**: 2025-12-26
-**Estado**: MANTENIMIENTO / DEBUG 🛠️
+**Estado**: LIVE / OPERATIVO 🚀
 
-Resultados:
-
+## 1. Despliegue y Rebranding
 - **Landing**: `organizalo.app` (Live ✅)
-- **App**: `app.organizalo.app` (Error 503 / Unreachable ❌)
+- **App**: `app.organizalo.app` (Live ✅)
+- **Branding**: Completado (Logos, Colores, Textos "Plane" -> "Organizalo").
 
-## Diagnóstico Técnico
+## 2. Integración WhatsApp (Phase 1)
+**Estado**: Código Sincronizado y Configurado 🔌
 
-1.  **DNS**: ✅ Resuelto correctamente (`82.29.184.99`).
-2.  **Servicio**: ✅ Los contenedores están corriendo.
-3.  **Error**: ❌ **Puerto Incorrecto**.
-    - EasyPanel está intentando conectar al puerto `3000`.
-    - Los logs indican que el servicio `web` (Nginx) está escuchando en el puerto `80`.
+Hemos restaurado y configurado la integración de WhatsApp basada en WAHA.
 
-> [!CAUTION]
-> **Acción Requerida**: Cambiar el puerto del dominio `app.organizalo.app` de `3000` a `80`.
+### Código Restaurado
+- **View**: `apps/api/plane/app/views/integration.py` - Endpoint para webhooks y QR.
+- **Service**: `apps/api/plane/services/integrations/whatsapp_service.py` - Cliente WAHA.
+- **URLs**: Rutas registradas en `apps/api/plane/app/urls/integration.py`.
 
-![Logs Nginx Port 80](/easypanel_check_logs_deploy_1766812525814.webp)
+### Infraestructura
+- **Docker Compose**: Servicio `whatsapp` (devlikeapro/waha) añadido en puerto 3000.
 
-## Próximos Pasos (Fase 4)
-
-- [ ] **Corregir Puerto en EasyPanel** (Manual necesario por error de herramienta).
-- [ ] Verificar acceso.
-- [ ] Integración de Pagos (Stripe/Paddle).
+## Validación Pendiente
+1.  **Desplegar**: Reiniciar contenedores en EasyPanel.
+2.  **Verificar**: Escanear QR y probar flujo de mensajes.

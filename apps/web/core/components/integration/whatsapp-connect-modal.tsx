@@ -4,8 +4,6 @@ import { Fragment } from "react";
 import { Button } from "@plane/propel/button";
 import { IntegrationService } from "@/services/integrations";
 
-// You might need to add this method to IntegrationService in frontend as well
-// For now, let's assume valid API call
 const integrationService = new IntegrationService();
 
 type Props = {
@@ -22,15 +20,12 @@ export const WhatsAppConnectModal = ({ isOpen, onClose, workspaceSlug }: Props) 
     const fetchQR = async () => {
         setLoading(true);
         try {
-            // Assuming we have a service method or using fetch directly
-            // Replace with actual API client call
-            const response = await fetch(`/api/integrations/whatsapp/qr`);
-            const data = await response.json();
+            const data = await integrationService.getWhatsAppQR();
             if (data.qr_image) {
                 setQrImage(data.qr_image);
             }
         } catch (e) {
-            console.error(e);
+            console.error("Failed to fetch QR:", e);
         } finally {
             setLoading(false);
         }
@@ -38,15 +33,10 @@ export const WhatsAppConnectModal = ({ isOpen, onClose, workspaceSlug }: Props) 
 
     const checkStatus = async () => {
         try {
-            const response = await fetch(`/api/integrations/whatsapp/status`);
-            const data = await response.json();
+            const data = await integrationService.getWhatsAppStatus();
             setStatus(data.status);
-            if (data.status === 'CONNECTED' || data.status === 'WORKING') {
-                // Close modal or show success
-                // onClose();
-            }
         } catch (error) {
-            console.error(error);
+            console.error("Failed to check status:", error);
         }
     };
 
@@ -67,29 +57,46 @@ export const WhatsAppConnectModal = ({ isOpen, onClose, workspaceSlug }: Props) 
                         <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
                             Connect WhatsApp
                         </Dialog.Title>
-                        <div className="mt-4 flex flex-col items-center justify-center">
+                        <div className="mt-4 flex flex-col items-center justify-center min-h-[300px]">
                             {loading ? (
-                                <p>Loading QR Code...</p>
-                            ) : status === 'CONNECTED' || status === 'WORKING' ? (
                                 <div className="flex flex-col items-center">
-                                    <p className="text-green-500 font-bold text-xl">Connected!</p>
-                                    <p className="mt-2 text-sm text-gray-500">You can now close this window.</p>
+                                    <p className="text-sm text-gray-500">Generating QR Code...</p>
+                                </div>
+                            ) : status === 'CONNECTED' || status === 'WORKING' ? (
+                                <div className="flex flex-col items-center py-8">
+                                    <div className="bg-green-100 p-4 rounded-full mb-4">
+                                        <svg className="w-12 h-12 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </div>
+                                    <p className="text-green-600 font-bold text-xl">Connected!</p>
+                                    <p className="mt-2 text-sm text-center text-gray-500">
+                                        Your WhatsApp account is successfully linked.
+                                    </p>
                                 </div>
                             ) : qrImage ? (
                                 <>
-                                    <img src={qrImage} alt="WhatsApp QR Code" className="w-64 h-64 border-2 border-gray-200 rounded-lg" />
-                                    <p className="mt-4 text-sm text-gray-500">
-                    Open WhatsApp on your phone > Settings > Linked Devices > Link a Device > Scan QR Code
+                                    <img src={qrImage} alt="WhatsApp QR Code" className="w-64 h-64 border-2 border-gray-100 rounded-lg shadow-sm" />
+                                    <p className="mt-6 text-xs text-center text-gray-500 px-4">
+                                        1. Open WhatsApp on your phone<br />
+                                        2. Tap Menu or Settings and select Linked Devices<br />
+                                        3. Tap Link a Device and point your phone to this screen
                                     </p>
                                 </>
                             ) : (
-                                <p className="text-red-500">Failed to load QR Code. Is the service running?</p>
+                                <div className="text-center py-8">
+                                    <p className="text-red-500 text-sm font-medium">Failed to load QR Code</p>
+                                    <p className="text-xs text-gray-400 mt-1">Please ensure the WAHA service is running.</p>
+                                    <Button variant="neutral-primary" onClick={fetchQR} className="mt-4">
+                                        Retry
+                                    </Button>
+                                </div>
                             )}
                         </div>
 
-                        <div className="mt-4 flex justify-end">
-                            <Button variant="neutral-primary" onClick={onClose} className="ml-2">
-                                Close
+                        <div className="mt-6 flex justify-end">
+                            <Button variant="neutral-primary" onClick={onClose} className="w-full sm:w-auto">
+                                {status === 'CONNECTED' || status === 'WORKING' ? "Done" : "Cancel"}
                             </Button>
                         </div>
                     </Dialog.Panel>

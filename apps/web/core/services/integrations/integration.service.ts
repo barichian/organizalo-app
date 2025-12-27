@@ -64,4 +64,29 @@ export class IntegrationService extends APIService {
         throw error?.response?.data;
       });
   }
+
+  // WhatsApp Integration
+  async getWhatsAppQR(): Promise<{ qr_image: string }> {
+    return this.get(`/api/integrations/whatsapp/qr/`)
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  async getWhatsAppStatus(): Promise<{ status: string }> {
+    return this.get(`/api/integrations/whatsapp/status/`)
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  async sendWhatsAppTestMessage(phone: string, message: string): Promise<any> {
+    return this.post(`/api/integrations/whatsapp/send/`, { phone, message })
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
 }

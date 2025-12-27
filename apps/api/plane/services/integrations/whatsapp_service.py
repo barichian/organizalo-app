@@ -3,9 +3,9 @@ from django.conf import settings
 
 class WhatsAppService:
     def __init__(self):
-        # In a real scenario, these should be in django settings
-        self.base_url = "http://whatsapp:3000" 
-        self.api_key = "plane"
+        # Prefer settings if available, otherwise use defaults
+        self.base_url = getattr(settings, "WAHA_BASE_URL", "http://whatsapp:3000")
+        self.api_key = getattr(settings, "WAHA_API_KEY", "plane")
         self.headers = {
             "X-Api-Key": self.api_key,
             "Content-Type": "application/json"
@@ -16,15 +16,15 @@ class WhatsAppService:
         Get the QR code screenshot in base64 format.
         """
         try:
+            # Ensure session is running before fetching screenshot
+            status = self.get_session_status(session_id)
+            if status == "STOPPED":
+                self.start_session(session_id)
+
             url = f"{self.base_url}/api/screenshot"
             params = {"session": session_id}
             response = requests.get(url, headers=self.headers, params=params)
             response.raise_for_status()
-            # WAHA returns the image binary or base64 depending on endpoint configuration
-            # Specifically /api/screenshot returns the image binary by default
-            # But the detailed plan implied showing a QR code. 
-            # WAHA has /api/sessions/{session}/auth/qr which returns the QR data
-            # Let's use the screenshot endpoint for simplicity if it returns an image we can display
             return response.content
         except requests.RequestException as e:
             print(f"Error fetching WhatsApp screenshot: {e}")

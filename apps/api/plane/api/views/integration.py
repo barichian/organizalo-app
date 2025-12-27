@@ -1,11 +1,11 @@
 # Third party imports
-from rest_framework import viewsets, status
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 # Module imports
-from plane.api.views import BaseViewSet
+from plane.app.views import BaseViewSet
 from plane.services.integrations.whatsapp_service import WhatsAppService
 from plane.db.models.integration.whatsapp import WhatsAppProjectSync
 

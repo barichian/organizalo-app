@@ -18,7 +18,7 @@ Hemos restaurado y configurado la integración de WhatsApp basada en WAHA.
 - **URLs**: Rutas registradas en `apps/api/plane/app/urls/integration.py`.
 
 ### Infraestructura
-- **Docker Compose**: Servicio `whatsapp` (devlikeapro/waha) añadido en puerto 3000.
+- **Docker Compose**: Servicio `whatsapp` (devlikeapro/waha) añadido en puerto 3001 (host) -> 3000 (container) para evitar conflictos.
 
 ## Validación Pendiente
 1.  **Desplegar**: Reiniciar contenedores en EasyPanel.

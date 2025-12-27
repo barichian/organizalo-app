@@ -247,7 +247,7 @@ services:
       - WHATSAPP_SWAGGER_PASSWORD=admin
       - WHATSAPP_API_KEY=${WAHA_API_KEY:-plane}
     ports:
-      - "3000:3000"
+      - "3001:3000"
     volumes:
       - whatsapp_data:/app/sessions
 

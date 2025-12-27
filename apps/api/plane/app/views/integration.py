@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 
 from plane.db.models import User, Project
-from plane.app.views.wrapper import WebhookEndpoint
+from plane.app.views import WebhookEndpoint
 from plane.services.integrations.whatsapp_service import WhatsAppService
 
 class WhatsAppWebhookEndpoint(APIView):

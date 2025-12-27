@@ -38,7 +38,10 @@ export const AuthHeader = observer(function AuthHeader({ type }: AuthHeaderProps
       <PageHead title={t(authContentMap[type].pageTitle) + " - Plane"} />
       <div className="flex items-center justify-between gap-6 w-full flex-shrink-0 sticky top-0">
         <Link href="/">
-          <img src="/organizalo-logo.png" alt="Organizalo Logo" className="h-8 w-auto" />
+          <div className="flex items-center gap-2.5">
+            <img src="/organizalo-logo.png" alt="Organizalo Logo" className="h-8 w-8" />
+            <span className="text-2xl font-bold tracking-tight text-custom-text-100">Organizalo</span>
+          </div>
         </Link>
         {enableSignUpConfig && (
           <div className="flex flex-col items-end text-sm font-medium text-center sm:items-center sm:gap-2 sm:flex-row text-custom-text-300">

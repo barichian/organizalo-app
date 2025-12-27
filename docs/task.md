@@ -1,33 +1,36 @@
 # Roadmap: Organizalo.app
 
-## Phase 1: Core WhatsApp Integration <!-- id: 0 -->
+## ✅ Phase 1: Core Setup & Deployment (COMPLETE)
+- [x] **Production Deployment:** Deployed via EasyPanel/Docker on `organizalo.app` (Landing) and `app.organizalo.app` (Platform).
+- [x] **Domain Configuration:** DNS records set for root and `app` subdomain.
+- [x] **SMTP Setup:** System emails configured (with fallback error handling).
 
-- [x] **Finalize Webhook** (Receive messages) <!-- id: 1 -->
-- [x] **Data Sync Logic** (Code Synced & Configured) <!-- id: 2 -->
-- [ ] **Manual Verification** (Full flow test) <!-- id: 3 -->
+## ✅ Phase 2: Rebranding & UI Polish (COMPLETE)
+- [x] **Core Identity:** Replaced "Plane" with "Organizalo" and "Organizalo.app".
+- [x] **Assets:** Updated Logos, Favicons, and Brand Colors (Blue/Yellow/Red scheme).
+- [x] **Login Screen:** Customized header, centered logo (`h-20`), translated strings to Spanish.
+- [x] **Landing Page:**
+    - [x] Located code in `apps/landing`.
+    - [x] Updated Navbar, Hero, and Footer logos to `organizalo-logo.png`.
+    - [x] Verified "Comenzar Gratis" links point to `app.organizalo.app`.
 
-## Phase 2: Total Rebranding <!-- id: 4 -->
+## ✅ Phase 3: Critical Bug Fixes (COMPLETE)
+- [x] **Login Redirection:** Fixed logic to force redirect to `https://app.organizalo.app` after login, preventing loops.
+- [x] **Signup Stability (Error 505):**
+    - [x] Wrapped `user_activation_email` in try/catch to prevent crashes if SMTP fails.
+    - [x] Wrapped Redis cache invalidation in try/catch to prevent crashes if Redis is unstable.
 
-- [x] Replace Logos & Favicons <!-- id: 5 -->
-- [x] UI String Replacements ("Plane" -> "Organizalo") <!-- id: 6 -->
-- [x] Color Palette & Theme Updates (Add Theme Toggle) <!-- id: 7 -->
-- [x] Domain & Email Configuration <!-- id: 8 -->
-- [x] **Legal Pages** (Terms & Privacy created) <!-- id: 20 -->
-- [x] **Auth Customization** (Spanish, Inner Header Branding) <!-- id: 21 -->
-- [x] **Redirection Fix** (Absolute URL Force)
+## 🚀 Phase 4: WhatsApp Integration (NEXT PRIORITY)
+**Goal:** Enable users to manage tasks via WhatsApp using the existing Meta Webhook setup.
+- [ ] **Verify Webhook:** Confirm `apps/api/plane/api/views/webhook.py` (or equivalent) is receiving data from Meta.
+- [ ] **Process Inbound Messages:**
+    - [ ] Create Task from text message.
+    - [ ] Link WhatsApp phone number to User Profile.
+- [ ] **Outbound Notifications:**
+    - [ ] Send alert when task is assigned.
+    - [ ] Send daily summary.
+- [ ] **Manual Verification:** Full end-to-end test with a real WhatsApp account.
 
-## Phase 3: Notifications & Communication <!-- id: 9 -->
-
-- [x] WhatsApp Alerts (Assignments, Due Dates) <!-- id: 10 -->
-- [x] WhatsApp Preference Toggle (UI/Backend) <!-- id: 100 -->
-- [x] System Emails Setup (SMTP) <!-- id: 11 -->
-- [ ] Daily Summary (Scheduled Task) <!-- id: 12 -->
-
-## Phase 4: SaaS Features <!-- id: 13 -->
-
-- [x] Visual Verification: Platform Branding <!-- id: 17 -->
-- [x] Landing Page Refinement (Elegant, Icons, "Organizalo.app") <!-- id: 14 -->
-- [x] Production Deployment (organizalo.app) <!-- id: 18 -->
-- [x] App Subdomain Configuration (DNS OK, Port 80 Fixed) <!-- id: 19 -->
-- [ ] Subscription/Billing Integration (Stripe/Paddle) <!-- id: 15 -->
-- [ ] Permission Enforcement <!-- id: 16 -->
+## Phase 5: SaaS & Monetization (Future)
+- [ ] Subscription/Billing Integration (Stripe/Paddle).
+- [ ] Usage Limits Enforcement.

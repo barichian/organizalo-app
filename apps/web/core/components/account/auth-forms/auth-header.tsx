@@ -103,7 +103,7 @@ export const AuthHeader = observer(function AuthHeader(props: TAuthHeader) {
 
   return (
     <div className="flex flex-col gap-2 items-center text-center">
-      <img src="/organizalo-logo.png" alt="Organizalo Logo" className="h-12 w-12 mb-2" />
+      <img src="/organizalo-logo.png" alt="Organizalo Logo" className="h-20 w-auto mb-4 object-contain" />
       <span className="text-xl font-semibold text-custom-text-100 leading-7">
         {typeof header === "string" ? "Organiza tu vida y trabajo" : header}
       </span>

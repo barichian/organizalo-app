@@ -202,7 +202,10 @@ class Adapter:
         user.token_updated_at = timezone.now()
         # If user is not active, send the activation email and set the user as active
         if not user.is_active:
-            user_activation_email.delay(base_host(request=self.request), user.id)
+            try:
+                user_activation_email.delay(base_host(request=self.request), user.id)
+            except Exception as e:
+                log_exception(e)
         # Set user as active
         user.is_active = True
         user.save()

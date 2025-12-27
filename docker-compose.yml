@@ -208,11 +208,17 @@ services:
       args:
         DOCKER_BUILDKIT: 1
     restart: always
+    depends_on:
+      - plane-redis
+      - api
     environment:
       - LIVE_SERVER_SECRET_KEY=${LIVE_SERVER_SECRET_KEY}
       - LIVE_BASE_URL=${LIVE_BASE_URL}
       - LIVE_BASE_PATH=${LIVE_BASE_PATH}
       - API_BASE_URL=${API_BASE_URL}
+      - REDIS_HOST=${REDIS_HOST:-plane-redis}
+      - REDIS_PORT=${REDIS_PORT:-6379}
+      - REDIS_URL=${REDIS_URL}
 
   plane-db:
     image: postgres:15.7-alpine

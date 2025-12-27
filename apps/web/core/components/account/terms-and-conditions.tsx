@@ -8,13 +8,13 @@ interface TermsAndConditionsProps {
 
 // Constants for better maintainability
 const LEGAL_LINKS = {
-  termsOfService: "https://plane.so/legals/terms-and-conditions",
-  privacyPolicy: "https://plane.so/legals/privacy-policy",
+  termsOfService: "/legal/terms-of-service",
+  privacyPolicy: "/legal/privacy-policy",
 } as const;
 
 const MESSAGES = {
-  [EAuthModes.SIGN_UP]: "By creating an account",
-  [EAuthModes.SIGN_IN]: "By signing in",
+  [EAuthModes.SIGN_UP]: "Al crear una cuenta",
+  [EAuthModes.SIGN_IN]: "Al iniciar sesión",
 } as const;
 
 // Reusable link component to reduce duplication
@@ -30,9 +30,9 @@ export function TermsAndConditions({ authType = EAuthModes.SIGN_IN }: TermsAndCo
   return (
     <div className="flex items-center justify-center">
       <p className="text-center text-sm text-custom-text-300 whitespace-pre-line">
-        {`${MESSAGES[authType]}, you understand and agree to \n our `}
-        <LegalLink href={LEGAL_LINKS.termsOfService}>Terms of Service</LegalLink> and{" "}
-        <LegalLink href={LEGAL_LINKS.privacyPolicy}>Privacy Policy</LegalLink>.
+        {`${MESSAGES[authType]}, aceptas nuestros \n`}
+        <LegalLink href={LEGAL_LINKS.termsOfService}>Términos de Servicio</LegalLink> y{" "}
+        <LegalLink href={LEGAL_LINKS.privacyPolicy}>Política de Privacidad</LegalLink>.
       </p>
     </div>
   );

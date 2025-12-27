@@ -13,8 +13,8 @@
 - [x] Color Palette & Theme Updates (Add Theme Toggle) <!-- id: 7 -->
 - [x] Domain & Email Configuration <!-- id: 8 -->
 - [x] **Legal Pages** (Terms & Privacy created) <!-- id: 20 -->
-- [x] **Auth Customization** (Spanish Login/Signup Differentiation) <!-- id: 21 -->
-- [x] **Redirection Fix** (Forced `next_path` to avoid Landing Page loop)
+- [x] **Auth Customization** (Spanish, Inner Header Branding) <!-- id: 21 -->
+- [x] **Redirection Fix** (Absolute URL Force)
 
 ## Phase 3: Notifications & Communication <!-- id: 9 -->
 

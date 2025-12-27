@@ -180,7 +180,7 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
       >
         <input type="hidden" name="csrfmiddlewaretoken" />
         <input type="hidden" value={passwordFormData.email} name="email" />
-        <input type="hidden" value={nextPath || "/"} name="next_path" />
+        <input type="hidden" value={nextPath || "https://app.organizalo.app"} name="next_path" />
         <div className="space-y-1">
           <label htmlFor="email" className="text-sm font-medium text-custom-text-300">
             {t("auth.common.email.label")}

@@ -22,30 +22,30 @@ type TAuthHeader = {
 const Titles = {
   [EAuthModes.SIGN_IN]: {
     [EAuthSteps.EMAIL]: {
-      header: "Trabaja en todas las dimensiones.",
-      subHeader: "Bienvenido a Organizalo.",
+      header: "Organiza tu vida y trabajo",
+      subHeader: "Bienvenido a Organizalo",
     },
     [EAuthSteps.PASSWORD]: {
-      header: "Trabaja en todas las dimensiones.",
-      subHeader: "Bienvenido a Organizalo.",
+      header: "Organiza tu vida y trabajo",
+      subHeader: "Bienvenido a Organizalo",
     },
     [EAuthSteps.UNIQUE_CODE]: {
-      header: "Trabaja en todas las dimensiones.",
-      subHeader: "Bienvenido a Organizalo.",
+      header: "Organiza tu vida y trabajo",
+      subHeader: "Bienvenido a Organizalo",
     },
   },
   [EAuthModes.SIGN_UP]: {
     [EAuthSteps.EMAIL]: {
-      header: "Trabaja en todas las dimensiones.",
-      subHeader: "Crea tu cuenta en Organizalo.",
+      header: "Organiza tu vida y trabajo",
+      subHeader: "Crea tu cuenta en Organizalo",
     },
     [EAuthSteps.PASSWORD]: {
-      header: "Trabaja en todas las dimensiones.",
-      subHeader: "Crea tu cuenta en Organizalo.",
+      header: "Organiza tu vida y trabajo",
+      subHeader: "Crea tu cuenta en Organizalo",
     },
     [EAuthSteps.UNIQUE_CODE]: {
-      header: "Trabaja en todas las dimensiones.",
-      subHeader: "Crea tu cuenta en Organizalo.",
+      header: "Organiza tu vida y trabajo",
+      subHeader: "Crea tu cuenta en Organizalo",
     },
   },
 };
@@ -102,11 +102,12 @@ export const AuthHeader = observer(function AuthHeader(props: TAuthHeader) {
     );
 
   return (
-    <div className="flex flex-col gap-1">
-      <span className="text-2xl font-semibold text-custom-text-100 leading-7">
-        {typeof header === "string" ? t(header) : header}
+    <div className="flex flex-col gap-2 items-center text-center">
+      <img src="/organizalo-logo.png" alt="Organizalo Logo" className="h-12 w-12 mb-2" />
+      <span className="text-xl font-semibold text-custom-text-100 leading-7">
+        {typeof header === "string" ? "Organiza tu vida y trabajo" : header}
       </span>
-      <span className="text-2xl font-semibold text-custom-text-400 leading-7">{subHeader}</span>
+      <span className="text-sm text-custom-text-400">{subHeader}</span>
     </div>
   );
 });

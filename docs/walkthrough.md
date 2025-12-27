@@ -26,5 +26,8 @@ Hemos restaurado y configurado la integración de WhatsApp basada en WAHA.
 1.  **Desplegar**: Reiniciar contenedores en EasyPanel.
 2.  **Verificar**:
     - Escanear QR y probar flujo de mensajes.
-    - Probar textos en español en Login/Signup.
-    - Verificar enlaces a Términos y Privacidad.
+
+## 3. Redirection Fix (Login/Signup Loop)
+- **Problem**: Users were redirected to the Landing Page (`organizalo.app`) after clicking "Continue" or "Sign In" because the backend used `WEB_URL` (set to Landing) as the default redirect.
+- **Solution**: Patched `password.tsx` and `unique-code.tsx` to explicitly send `next_path="/"`. This forces the backend to redirect to the App root (`app.organizalo.app`), bypassing the incorrect default.
+- **Recommendation**: Update `WEB_URL` environment variable in EasyPanel to `https://app.organizalo.app` for correctly generated email links.

@@ -102,8 +102,8 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
   const isButtonDisabled = useMemo(
     () =>
       !isSubmitting &&
-      !!passwordFormData.password &&
-      (mode === EAuthModes.SIGN_UP ? passwordFormData.password === passwordFormData.confirm_password : true)
+        !!passwordFormData.password &&
+        (mode === EAuthModes.SIGN_UP ? passwordFormData.password === passwordFormData.confirm_password : true)
         ? false
         : true,
     [isSubmitting, mode, passwordFormData.confirm_password, passwordFormData.password]
@@ -180,7 +180,7 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
       >
         <input type="hidden" name="csrfmiddlewaretoken" />
         <input type="hidden" value={passwordFormData.email} name="email" />
-        {nextPath && <input type="hidden" value={nextPath} name="next_path" />}
+        <input type="hidden" value={nextPath || "/"} name="next_path" />
         <div className="space-y-1">
           <label htmlFor="email" className="text-sm font-medium text-custom-text-300">
             {t("auth.common.email.label")}

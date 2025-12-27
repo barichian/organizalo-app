@@ -140,10 +140,10 @@ export const WorkspaceAuthWrapper = observer(function WorkspaceAuthWrapper(props
       <div className="relative flex h-full w-full flex-col items-center justify-center bg-custom-background-90 ">
         <div className="container relative mx-auto flex h-full w-full flex-col overflow-hidden overflow-y-auto px-5 py-14 md:px-0">
           <div className="relative flex flex-shrink-0 items-center justify-between gap-4">
-            <div className="z-10 flex-shrink-0 bg-custom-background-90 py-4">
+            <div className="z-10 flex-shrink-0">
               <div className="flex items-center gap-2.5">
-                <img src="/organizalo-logo.png" alt="Organizalo Logo" className="h-8 w-8" />
-                <span className="text-xl font-bold tracking-tight text-custom-text-100">Organizalo</span>
+                <img src="/organizalo-logo.png" alt="Organizalo Logo" className="h-10 w-10" />
+                <span className="text-2xl font-bold tracking-tight text-custom-text-100">Organizalo.app</span>
               </div>
             </div>
             <div className="relative flex items-center gap-2">

@@ -188,19 +188,17 @@ const InviteMemberInput = observer(function InviteMemberInput(props: InviteMembe
                   className="flex w-full items-center justify-between gap-1 rounded-md px-2.5 py-2 text-sm border-[0.5px] border-custom-border-300"
                 >
                   <span
-                    className={`text-sm ${
-                      !getValues(`emails.${index}.role_active`) ? "text-custom-text-400" : "text-custom-text-100"
-                    } sm:text-sm`}
+                    className={`text-sm ${!getValues(`emails.${index}.role_active`) ? "text-custom-text-400" : "text-custom-text-100"
+                      } sm:text-sm`}
                   >
                     {ROLE[value]}
                   </span>
 
                   <ChevronDownIcon
-                    className={`size-3 ${
-                      !getValues(`emails.${index}.role_active`)
+                    className={`size-3 ${!getValues(`emails.${index}.role_active`)
                         ? "stroke-onboarding-text-400"
                         : "stroke-onboarding-text-100"
-                    }`}
+                      }`}
                   />
                 </Listbox.Button>
 
@@ -217,8 +215,7 @@ const InviteMemberInput = observer(function InviteMemberInput(props: InviteMembe
                         key={key}
                         value={parseInt(key)}
                         className={({ active, selected }) =>
-                          `cursor-pointer select-none truncate rounded px-1 py-1.5 ${
-                            active || selected ? "bg-onboarding-background-400/40" : ""
+                          `cursor-pointer select-none truncate rounded px-1 py-1.5 ${active || selected ? "bg-onboarding-background-400/40" : ""
                           } ${selected ? "text-custom-text-100" : "text-custom-text-200"}`
                         }
                       >
@@ -350,9 +347,9 @@ export function InviteMembers(props: Props) {
       <div className="w-full h-full overflow-auto px-6 py-10 sm:px-7 sm:py-14 md:px-14 lg:px-28">
         <div className="flex flex-col w-full items-center justify-center p-8 mt-6 md:w-4/5 mx-auto">
           <div className="text-center space-y-1 py-4 mx-auto w-4/5">
-            <h3 className="text-3xl font-bold text-custom-text-100">Invite your teammates</h3>
+            <h3 className="text-3xl font-bold text-custom-text-100">Invita a tu equipo</h3>
             <p className="font-medium text-custom-text-400">
-              Work in plane happens best with your team. Invite them now to use Plane to its potential.
+              El trabajo en equipo es mejor en Organizalo. Invítalos ahora para usar la plataforma al máximo.
             </p>
           </div>
           <form

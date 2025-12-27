@@ -102,6 +102,7 @@ class UserNotificationPreference(BaseModel):
     comment = models.BooleanField(default=True)
     mention = models.BooleanField(default=True)
     issue_completed = models.BooleanField(default=True)
+    whatsapp = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = "UserNotificationPreference"

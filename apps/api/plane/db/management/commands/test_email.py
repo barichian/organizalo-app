@@ -1,63 +1,43 @@
-from django.core.mail import EmailMultiAlternatives, get_connection
-from django.core.management import BaseCommand, CommandError
-from django.template.loader import render_to_string
-from django.utils.html import strip_tags
-
-# Module imports
-from plane.license.utils.instance_value import get_email_configuration
-
+from django.core.management.base import BaseCommand
+from django.core.mail import send_mail
+from django.conf import settings
 
 class Command(BaseCommand):
-    """Django command to pause execution until db is available"""
+    help = "Send a test email to verify SMTP configuration"
 
     def add_arguments(self, parser):
-        # Positional argument
-        parser.add_argument("to_email", type=str, help="receiver's email")
+        parser.add_argument(
+            "--recipient",
+            type=str,
+            required=True,
+            help="The email address to send the test message to",
+        )
 
     def handle(self, *args, **options):
-        receiver_email = options.get("to_email")
-
-        if not receiver_email:
-            raise CommandError("Receiver email is required")
-
-        (
-            EMAIL_HOST,
-            EMAIL_HOST_USER,
-            EMAIL_HOST_PASSWORD,
-            EMAIL_PORT,
-            EMAIL_USE_TLS,
-            EMAIL_USE_SSL,
-            EMAIL_FROM,
-        ) = get_email_configuration()
-
-        connection = get_connection(
-            host=EMAIL_HOST,
-            port=int(EMAIL_PORT),
-            username=EMAIL_HOST_USER,
-            password=EMAIL_HOST_PASSWORD,
-            use_tls=EMAIL_USE_TLS == "1",
-            use_ssl=EMAIL_USE_SSL == "1",
-            timeout=30,
+        recipient = options["recipient"]
+        subject = "Organizalo: Prueba de Correo / Test Email"
+        message = (
+            "Hola!\n\n"
+            "Si estás leyendo esto, la configuración SMTP de Organizalo funciona correctamente.\n"
+            "If you are reading this, Organizalo SMTP configuration is working correctly.\n\n"
+            "Saludos,\n"
+            "El equipo de Organizalo"
         )
-        # Prepare email details
-        subject = "Test email from Plane"
+        
+        self.stdout.write(f"Attempting to send email to {recipient}...")
+        self.stdout.write(f"Backend: {settings.EMAIL_BACKEND}")
+        self.stdout.write(f"Host: {settings.EMAIL_HOST}:{settings.EMAIL_PORT}")
+        self.stdout.write(f"User: {settings.EMAIL_HOST_USER}")
+        self.stdout.write(f"From: {settings.DEFAULT_FROM_EMAIL}")
 
-        html_content = render_to_string("emails/test_email.html")
-        text_content = strip_tags(html_content)
-
-        self.stdout.write(self.style.SUCCESS("Trying to send test email..."))
-
-        # Send the email
         try:
-            msg = EmailMultiAlternatives(
-                subject=subject,
-                body=text_content,
-                from_email=EMAIL_FROM,
-                to=[receiver_email],
-                connection=connection,
+            send_mail(
+                subject,
+                message,
+                settings.DEFAULT_FROM_EMAIL,
+                [recipient],
+                fail_silently=False,
             )
-            msg.attach_alternative(html_content, "text/html")
-            msg.send()
-            self.stdout.write(self.style.SUCCESS("Email successfully sent"))
+            self.stdout.write(self.style.SUCCESS(f"✅ Email sent successfully to {recipient}"))
         except Exception as e:
-            self.stdout.write(self.style.ERROR(f"Error: Email could not be delivered due to {e}"))
+            self.stdout.write(self.style.ERROR(f"❌ Failed to send email: {e}"))

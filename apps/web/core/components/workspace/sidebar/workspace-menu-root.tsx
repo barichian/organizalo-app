@@ -1,8 +1,9 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { observer } from "mobx-react";
 import Link from "next/link";
+import { useTheme } from "next-themes";
 // icons
-import { CirclePlus, LogOut, Mails } from "lucide-react";
+import { CirclePlus, LogOut, Mails, Moon, Sun } from "lucide-react";
 // ui
 import { Menu, Transition } from "@headlessui/react";
 // plane imports
@@ -30,6 +31,8 @@ type WorkspaceMenuRootProps = {
 
 export const WorkspaceMenuRoot = observer(function WorkspaceMenuRoot(props: WorkspaceMenuRootProps) {
   const { variant } = props;
+  // theme
+  const { resolvedTheme, setTheme } = useTheme();
   // store hooks
   const { toggleSidebar, toggleAnySidebarDropdown } = useAppTheme();
   const { data: currentUser } = useUser();
@@ -158,9 +161,9 @@ export const WorkspaceMenuRoot = observer(function WorkspaceMenuRoot(props: Work
                       <div className="size-full flex flex-col items-start justify-start">
                         {(activeWorkspace
                           ? [
-                              activeWorkspace,
-                              ...workspacesList.filter((workspace) => workspace.id !== activeWorkspace?.id),
-                            ]
+                            activeWorkspace,
+                            ...workspacesList.filter((workspace) => workspace.id !== activeWorkspace?.id),
+                          ]
                           : workspacesList
                         ).map((workspace) => (
                           <SidebarDropdownItem
@@ -204,6 +207,22 @@ export const WorkspaceMenuRoot = observer(function WorkspaceMenuRoot(props: Work
                         {t("workspace_invites")}
                       </Menu.Item>
                     </Link>
+
+                    <div className="w-full">
+                      <Menu.Item
+                        as="button"
+                        type="button"
+                        className="flex w-full items-center gap-2 rounded px-2 py-1 text-sm font-medium text-custom-sidebar-text-200 hover:bg-custom-sidebar-background-80"
+                        onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+                      >
+                        {resolvedTheme === "dark" ? (
+                          <Sun className="size-4 flex-shrink-0" />
+                        ) : (
+                          <Moon className="size-4 flex-shrink-0" />
+                        )}
+                        {resolvedTheme === "dark" ? "Modo Claro" : "Modo Oscuro"}
+                      </Menu.Item>
+                    </div>
 
                     <div className="w-full">
                       <Menu.Item

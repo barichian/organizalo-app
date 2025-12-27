@@ -10,7 +10,7 @@ export function PageHead(props: PageHeadTitleProps) {
 
   useEffect(() => {
     if (title) {
-      document.title = title ?? "Plane | Simple, extensible, open-source project management tool.";
+      document.title = title ?? "Organizalo | Gestión de tareas simple y potente.";
     }
   }, [title]);
 

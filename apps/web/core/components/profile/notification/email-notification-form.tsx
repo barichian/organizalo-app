@@ -190,6 +190,38 @@ export function EmailNotificationForm(props: IEmailNotificationFormProps) {
             />
           </div>
         </div>
+
+        {/* WhatsApp Toggle */}
+        <div className="flex gap-2 items-center pt-6 border-t mt-4 border-custom-border-200">
+          <div className="grow">
+            <div className="flex items-center gap-2">
+              <div className="pb-1 text-base font-medium text-custom-text-100">WhatsApp</div>
+              <span className="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded-full font-medium">Beta</span>
+            </div>
+            <div className="text-sm font-normal text-custom-text-300">
+              Recibe notificaciones importantes (menciones, asignaciones) directamente en tu WhatsApp.
+              <br />
+              <span className="text-xs text-custom-text-400">*Requiere número de teléfono verificado en tu perfil.</span>
+            </div>
+          </div>
+          <div className="shrink-0">
+            <Controller
+              control={control}
+              name="whatsapp"
+              render={({ field: { value, onChange } }) => (
+                <ToggleSwitch
+                  value={value}
+                  onChange={(newValue) => {
+                    onChange(newValue);
+                    handleSettingChange("whatsapp", newValue);
+                  }}
+                  size="sm"
+                />
+              )}
+            />
+          </div>
+        </div>
+
       </div>
     </>
   );

@@ -22,30 +22,30 @@ type TAuthHeader = {
 const Titles = {
   [EAuthModes.SIGN_IN]: {
     [EAuthSteps.EMAIL]: {
-      header: "Work in all dimensions.",
-      subHeader: "Welcome back to Plane.",
+      header: "Trabaja en todas las dimensiones.",
+      subHeader: "Bienvenido a Organizalo.",
     },
     [EAuthSteps.PASSWORD]: {
-      header: "Work in all dimensions.",
-      subHeader: "Welcome back to Plane.",
+      header: "Trabaja en todas las dimensiones.",
+      subHeader: "Bienvenido a Organizalo.",
     },
     [EAuthSteps.UNIQUE_CODE]: {
-      header: "Work in all dimensions.",
-      subHeader: "Welcome back to Plane.",
+      header: "Trabaja en todas las dimensiones.",
+      subHeader: "Bienvenido a Organizalo.",
     },
   },
   [EAuthModes.SIGN_UP]: {
     [EAuthSteps.EMAIL]: {
-      header: "Work in all dimensions.",
-      subHeader: "Create your Plane account.",
+      header: "Trabaja en todas las dimensiones.",
+      subHeader: "Crea tu cuenta en Organizalo.",
     },
     [EAuthSteps.PASSWORD]: {
-      header: "Work in all dimensions.",
-      subHeader: "Create your Plane account.",
+      header: "Trabaja en todas las dimensiones.",
+      subHeader: "Crea tu cuenta en Organizalo.",
     },
     [EAuthSteps.UNIQUE_CODE]: {
-      header: "Work in all dimensions.",
-      subHeader: "Create your Plane account.",
+      header: "Trabaja en todas las dimensiones.",
+      subHeader: "Crea tu cuenta en Organizalo.",
     },
   },
 };

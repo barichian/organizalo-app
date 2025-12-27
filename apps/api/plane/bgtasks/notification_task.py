@@ -664,6 +664,54 @@ def notifications(
             # Bulk create notifications
             Notification.objects.bulk_create(bulk_notifications, batch_size=100)
             EmailNotificationLog.objects.bulk_create(bulk_email_logs, batch_size=100, ignore_conflicts=True)
+
+            # ==========================================
+            # ORGANIZALO: WhatsApp Notifications
+            # ==========================================
+            try:
+                from plane.services.integrations.whatsapp_service import WhatsAppService
+                whatsapp_service = WhatsAppService()
+                
+                # Filter useful notifications for WhatsApp
+                # We prioritize Assignments and Mentions
+                
+                for notification in bulk_notifications:
+                    receiver_id = notification.receiver_id
+                    receiver_user = User.objects.filter(pk=receiver_id).first()
+                    
+                    if not receiver_user or not receiver_user.mobile_number:
+                        continue
+
+                    # Check Preference
+                    try:
+                        preference = UserNotificationPreference.objects.get(user_id=receiver_id)
+                        if not preference.whatsapp:
+                            continue
+                    except UserNotificationPreference.DoesNotExist:
+                        # Default to enabled if no preference found, or disabled? 
+                        # Safe default: enabled if they provided a number
+                        pass
+                        
+                    # Construct Message
+                    message = None
+                    issue_name = notification.data.get("issue", {}).get("name", "Tarea")
+                    project_identifier = notification.data.get("issue", {}).get("identifier", "")
+                    sequence_id = notification.data.get("issue", {}).get("sequence_id", "")
+                    issue_ref = f"{project_identifier}-{sequence_id}"
+                    
+                    if notification.sender == "in_app:issue_activities:assigned":
+                        message = f"📌 *Asignación*: Te han asignado la tarea *{issue_ref}*: {issue_name}"
+                    elif notification.sender == "in_app:issue_activities:mentioned":
+                         message = f"💬 *Mención*: Te mencionaron en *{issue_ref}*: {issue_name}"
+                         
+                    if message:
+                        print(f"Sending WhatsApp to {receiver_user.email} ({receiver_user.mobile_number})")
+                        whatsapp_service.send_message(receiver_user.mobile_number, message)
+
+            except Exception as e:
+                print(f"Error sending WhatsApp notifications: {e}")
+            # ==========================================
+
         return
     except Exception as e:
         print(e)

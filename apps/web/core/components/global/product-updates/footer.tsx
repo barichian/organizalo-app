@@ -12,7 +12,7 @@ export function ProductUpdatesFooter() {
     <div className="flex items-center justify-between flex-shrink-0 gap-4 m-6 mb-4">
       <div className="flex items-center gap-2">
         <a
-          href="https://go.plane.so/p-docs"
+          href="#"
           target="_blank"
           className="text-sm text-custom-text-200 hover:text-custom-text-100 hover:underline underline-offset-1 outline-none"
           rel="noreferrer"
@@ -23,39 +23,16 @@ export function ProductUpdatesFooter() {
           <circle cx={1} cy={1} r={1} />
         </svg>
         <a
-          data-ph-element={USER_TRACKER_ELEMENTS.CHANGELOG_REDIRECTED}
-          href="https://go.plane.so/p-changelog"
-          target="_blank"
-          className="text-sm text-custom-text-200 hover:text-custom-text-100 hover:underline underline-offset-1 outline-none"
-          rel="noreferrer"
-        >
-          {t("full_changelog")}
-        </a>
-        <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 fill-current">
-          <circle cx={1} cy={1} r={1} />
-        </svg>
-        <a
-          href="mailto:support@plane.so"
+          href="mailto:soporte@organizalo.app"
           target="_blank"
           className="text-sm text-custom-text-200 hover:text-custom-text-100 hover:underline underline-offset-1 outline-none"
           rel="noreferrer"
         >
           {t("support")}
         </a>
-        <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 fill-current">
-          <circle cx={1} cy={1} r={1} />
-        </svg>
-        <a
-          href="https://go.plane.so/p-discord"
-          target="_blank"
-          className="text-sm text-custom-text-200 hover:text-custom-text-100 hover:underline underline-offset-1 outline-none"
-          rel="noreferrer"
-        >
-          Discord
-        </a>
       </div>
       <a
-        href="https://plane.so/pages"
+        href="https://organizalo.app"
         target="_blank"
         className={cn(
           getButtonStyling("accent-primary", "sm"),
@@ -63,8 +40,7 @@ export function ProductUpdatesFooter() {
         )}
         rel="noreferrer"
       >
-        <PlaneLogo className="h-4 w-auto text-custom-text-100" />
-        {t("powered_by_plane_pages")}
+        <span>Organizalo.app</span>
       </a>
     </div>
   );

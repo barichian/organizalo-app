@@ -28,7 +28,7 @@ export default function Home() {
               <div className="relative w-10 h-10 transition-transform transform group-hover:scale-110 duration-300">
                 {/* Using the brand logo */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/brand-logo.png" alt="Organizalo Logo" className="w-full h-full object-contain drop-shadow-sm" />
+                <img src="/organizalo-logo.png" alt="Organizalo Logo" className="w-full h-full object-contain" />
               </div>
               <span className="text-2xl font-bold tracking-tight text-slate-900 group-hover:text-brand-blue transition-colors">
                 Organizalo.app
@@ -137,7 +137,7 @@ export default function Home() {
               <div className="aspect-[16/9] bg-slate-50 flex items-center justify-center text-slate-300 relative overflow-hidden group">
                 <div className="absolute inset-0 bg-slate-50 flex items-center justify-center">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/brand-logo.png" alt="Organizalo Logo" className="w-32 h-32 opacity-20 grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" />
+                  <img src="/organizalo-logo.png" alt="Organizalo Logo" className="w-32 h-32 opacity-20 grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" />
                 </div>
                 <span className="relative z-10 text-xl font-medium tracking-wide">Vista Previa del Dashboard</span>
               </div>

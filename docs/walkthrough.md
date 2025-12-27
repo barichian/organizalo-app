@@ -1,35 +1,27 @@
-# Estado del Proyecto: Organizalo.app
+# Walkthrough - Organizalo.app Deployment & Fixes
 
-**Estado**: LIVE / OPERATIVO 🚀
+## 1. Authentication Redirection Fix
+**Problem:** Users were being redirected to the landing page (`/`) instead of the app (`/` on the app subdomain) after login logic, or getting caught in a loop because `next_path` was missing or invalid.
+**Solution:**
+- **Frontend:** Modified `password.tsx` and `unique-code.tsx` to explicitly set `next_path` to the absolute URL `https://app.organizalo.app`.
+- **Backend:** Patched `apps/api/plane/authentication/utils/host.py` to Force-Return `settings.APP_BASE_URL` ("https://app.organizalo.app") when `is_app=True`, even if `APP_BASE_URL` env var was missing or misconfigured in some contexts.
 
-## 1. Despliegue y Rebranding
-- **Landing**: `organizalo.app` (Live ✅)
-- **App**: `app.organizalo.app` (Live ✅)
-- **Branding**: Completado (Logos, Colores, Textos "Plane" -> "Organizalo").
-- **Legal**: Páginas de `Términos` y `Privacidad` creadas en español.
-- **Auth**: Pantallas de Login/Registro diferenciadas y traducidas ("Comienza tu camino...").
+## 2. Branding (Logo & Text)
+**Problem:** The app had "Plane" branding. The new logo was not applied consistently, and centering was off.
+**Solution:**
+- **Login Screen:** Updated `auth-header.tsx` to use `organizalo-logo.png` with improved sizing (`h-20`) and centering classes.
+- **Landing Page:** Identified `apps/landing` as the source. Updated `page.tsx` to use the new logo in the Navbar, Hero, and Footer.
+- **Assets:** Added `organizalo-logo.png` to both `apps/web/public` and `apps/landing/public`.
 
-## 2. Integración WhatsApp (Phase 1)
-**Estado**: Código Sincronizado y Configurado 🔌
+## 3. Signup Stability (Error 505)
+**Problem:** Signup was failing with a 500 Server Error, likely due to synchronous email sending or cache invalidation failures when secondary services (RabbitMQ/Redis) were unstable.
+**Solution:**
+- **Email Task:** Wrapped `user_activation_email.delay()` in a `try/except` block in `apps/api/plane/authentication/adapter/base.py`. This ensures user creation succeeds even if the welcome email fails to send.
+- **Cache Invalidation:** Wrapped `invalidate_cache_directly` in `apps/api/plane/authentication/utils/workspace_project_join.py` to prevent Redis errors from blocking the signup flow.
 
-Hemos restaurado y configurado la integración de WhatsApp basada en WAHA.
-
-### Código Restaurado
-- **View**: `apps/api/plane/app/views/integration.py` - Endpoint para webhooks y QR.
-- **Service**: `apps/api/plane/services/integrations/whatsapp_service.py` - Cliente WAHA.
-- **URLs**: Rutas registradas en `apps/api/plane/app/urls/integration.py`.
-
-### Infraestructura
-- **Docker Compose**: Servicio `whatsapp` (devlikeapro/waha) añadido en puerto 3001 (host) -> 3000 (container).
-
-## Validación Pendiente
-1.  **Desplegar**: Reiniciar contenedores en EasyPanel.
-2.  **Verificar**:
-    - Escanear QR y probar flujo de mensajes.
-
-
-
-## 3. Redirection Fix (Robust Backend Patch)
-- **Problem**: The backend default redirect (`WEB_URL`) was overpowering relative paths, and `APP_BASE_URL` was missing. `path_validator.py` was stripping the absolute URL fix from the frontend.
-- **Solution**: Patched `host.py` in the backend (`apps/api`) to explicitly return `https://app.organizalo.app` when an app-level redirect is requested. This ensures the backend always constructs the redirect URL towards the App subdomain, not the Landing page.
-- **Branding**: Updated the *inner* auth card header (`auth-forms/auth-header.tsx`) with Organizalo branding.
+## 4. Deployment Instructions (Hostinger/EasyPanel)
+To apply all changes, perform a **Force Rebuild** on the following services:
+1.  **api**: (Backend code updates)
+2.  **worker**: (Backend code updates)
+3.  **web**: (Login screen logo updates)
+4.  **landing**: (Landing page logo updates)

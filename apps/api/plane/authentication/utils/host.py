@@ -54,7 +54,8 @@ def base_host(
         if settings.APP_BASE_URL:
             return settings.APP_BASE_URL
         else:
-            return base_origin
+             # Fix for Organizalo: Redirect to app subdomain if APP_BASE_URL is missing
+            return "https://app.organizalo.app"
 
     return base_origin
 

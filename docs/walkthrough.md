@@ -28,7 +28,8 @@ Hemos restaurado y configurado la integración de WhatsApp basada en WAHA.
     - Escanear QR y probar flujo de mensajes.
 
 
-## 3. Redirection Fix (Robust)
-- **Problem**: The backend default redirect (`WEB_URL`) was overpowering relative paths.
-- **Solution**: Updated `password.tsx` and `unique-code.tsx` to use the absolute URL `https://app.organizalo.app`. This guarantees the user is sent to the app domain regardless of server-side misconfiguration.
-- **Branding**: Updated the *inner* auth card header (`auth-forms/auth-header.tsx`) which was previously displaying default Plane text. Added the Organizalo logo and custom slogan "Organiza tu vida y trabajo".
+
+## 3. Redirection Fix (Robust Backend Patch)
+- **Problem**: The backend default redirect (`WEB_URL`) was overpowering relative paths, and `APP_BASE_URL` was missing. `path_validator.py` was stripping the absolute URL fix from the frontend.
+- **Solution**: Patched `host.py` in the backend (`apps/api`) to explicitly return `https://app.organizalo.app` when an app-level redirect is requested. This ensures the backend always constructs the redirect URL towards the App subdomain, not the Landing page.
+- **Branding**: Updated the *inner* auth card header (`auth-forms/auth-header.tsx`) with Organizalo branding.
